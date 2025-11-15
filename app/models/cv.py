@@ -1,9 +1,9 @@
 """CV analysis data models."""
 
 from datetime import datetime
-from typing import Dict, List, Optional
+from typing import Any, Dict, List, Optional
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, validator
 
 
 class CVSection(BaseModel):
@@ -63,7 +63,7 @@ class CVAnalysis(BaseModel):
     experience: List[CVExperience] = Field(default_factory=list, description="Work experience")
     education: List[str] = Field(default_factory=list, description="Education background")
     contact_info: Dict[str, str] = Field(default_factory=dict, description="Contact information")
-    analysis_metadata: Dict[str, any] = Field(default_factory=dict, description="Analysis metadata")
+    analysis_metadata: Dict[str, Any] = Field(default_factory=dict, description="Analysis metadata")
     created_at: datetime = Field(default_factory=datetime.utcnow)
     
     class Config:
@@ -161,7 +161,7 @@ class CVOptimizationRequest(BaseModel):
     """CV optimization request model."""
     
     cv_analysis: CVAnalysis = Field(..., description="CV analysis results")
-    job_requirements: Dict[str, any] = Field(..., description="Target job requirements")
+    job_requirements: Dict[str, Any] = Field(..., description="Target job requirements")
     
     class Config:
         """Pydantic config."""

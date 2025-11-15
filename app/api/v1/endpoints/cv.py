@@ -1,7 +1,7 @@
 """CV analysis API endpoints."""
 
 import time
-from typing import Dict, List
+from typing import Any, Dict, List
 
 from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile, status
 
@@ -32,7 +32,7 @@ router = APIRouter()
 )
 async def analyze_cv(
     file: UploadFile = File(..., description="CV file (PDF or DOCX)"),
-    request_obj: Depends(check_rate_limit),
+    _: None = Depends(check_rate_limit),
     client_ip: str = Depends(get_client_ip)
 ) -> CVAnalysisResponse:
     """Analyze a CV file."""
@@ -175,7 +175,7 @@ async def analyze_cv(
 )
 async def optimize_cv(
     request: CVOptimizationRequest,
-    request_obj: Depends(check_rate_limit),
+    _: None = Depends(check_rate_limit),
     client_ip: str = Depends(get_client_ip)
 ) -> CVOptimizationResponse:
     """Optimize CV for a specific job."""
@@ -332,7 +332,7 @@ async def get_cv_analysis(
 
 @router.get(
     "/",
-    response_model=List[Dict[str, any]],
+    response_model=List[Dict[str, Any]],
     summary="List CV Analyses",
     description="List all CV analyses (paginated)"
 )
@@ -340,7 +340,7 @@ async def list_cv_analyses(
     skip: int = 0,
     limit: int = 10,
     client_ip: str = Depends(get_client_ip)
-) -> List[Dict[str, any]]:
+) -> List[Dict[str, Any]]:
     """List CV analyses."""
     start_time = time.time()
     

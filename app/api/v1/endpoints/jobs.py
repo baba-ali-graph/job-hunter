@@ -1,7 +1,7 @@
 """Job analysis API endpoints."""
 
 import time
-from typing import Dict, List
+from typing import Any, Dict, List
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.responses import JSONResponse
@@ -32,7 +32,7 @@ router = APIRouter()
 )
 async def analyze_job(
     request: JobAnalysisRequest,
-    request_obj: Depends(check_rate_limit),
+    _: None = Depends(check_rate_limit),
     client_ip: str = Depends(get_client_ip)
 ) -> JobAnalysisResponse:
     """Analyze a job posting."""
@@ -197,7 +197,7 @@ async def get_job_analysis(
 
 @router.get(
     "/",
-    response_model=List[Dict[str, any]],
+    response_model=List[Dict[str, Any]],
     summary="List Job Analyses",
     description="List all job analyses (paginated)"
 )
@@ -205,7 +205,7 @@ async def list_job_analyses(
     skip: int = 0,
     limit: int = 10,
     client_ip: str = Depends(get_client_ip)
-) -> List[Dict[str, any]]:
+) -> List[Dict[str, Any]]:
     """List job analyses."""
     start_time = time.time()
     

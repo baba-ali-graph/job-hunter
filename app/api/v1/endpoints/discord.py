@@ -1,7 +1,7 @@
 """Discord integration API endpoints."""
 
 import time
-from typing import Dict
+from typing import Any, Dict
 
 from fastapi import APIRouter, Depends, HTTPException, status
 
@@ -31,7 +31,7 @@ router = APIRouter()
 )
 async def send_discord_webhook(
     request: DiscordWebhookRequest,
-    request_obj: Depends(check_rate_limit),
+    _: None = Depends(check_rate_limit),
     client_ip: str = Depends(get_client_ip)
 ) -> DiscordWebhookResponse:
     """Send message to Discord webhook."""
@@ -141,8 +141,8 @@ async def send_discord_webhook(
 )
 async def send_job_analysis_to_discord(
     webhook_url: str,
-    job_analysis_data: Dict[str, any],
-    request_obj: Depends(check_rate_limit),
+    job_analysis_data: Dict[str, Any],
+    _: None = Depends(check_rate_limit),
     client_ip: str = Depends(get_client_ip)
 ) -> DiscordWebhookResponse:
     """Send job analysis results to Discord."""
@@ -260,8 +260,8 @@ async def send_job_analysis_to_discord(
 )
 async def send_cv_optimization_to_discord(
     webhook_url: str,
-    cv_optimization_data: Dict[str, any],
-    request_obj: Depends(check_rate_limit),
+    cv_optimization_data: Dict[str, Any],
+    _: None = Depends(check_rate_limit),
     client_ip: str = Depends(get_client_ip)
 ) -> DiscordWebhookResponse:
     """Send CV optimization results to Discord."""
