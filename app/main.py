@@ -16,9 +16,21 @@ from app.core.exceptions import JobHunterException
 from app.core.logging import configure_logging, get_logger
 from app.api.v1.endpoints.health import update_metrics
 
+#Gemini integration
+from gemini_client import client, DEFAULT_MODEL
+# `google-genai` is optional. Import it after logging is configured so
+# we can handle missing dependency gracefully at runtime.
+
 # Configure logging
 configure_logging()
 logger = get_logger(__name__)
+
+# Optional GenAI import (google-genai). If it's not installed, disable
+# GenAI-related features without crashing application startup.
+try:
+    from google.genai import types as genai_types
+except Exception:
+    genai_types = None
 
 
 @asynccontextmanager

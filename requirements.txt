@@ -51,3 +51,8 @@ mypy==1.7.1
 
 # Environment Management
 python-dotenv==1.0.0
+
+
+#LLM
+google-genai==0.1.0
+python-multipart==0.0.6
