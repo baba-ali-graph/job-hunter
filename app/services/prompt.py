@@ -51,6 +51,7 @@ Compare this job description with the CV.
 3. List strong matches.
 4. List missing skills.
 5. Suggest improvements to make the CV fit the role better.
+6. Give the client an overall advice with respect to the job and CV
 
 JOB:
 {job}
