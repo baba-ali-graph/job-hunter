@@ -11,3 +11,4 @@ client = genai.Client(api_key=GEMINI_API_KEY)
 
 # Choose a default model – fast & good for this use-case
 DEFAULT_MODEL = "gemini-2.5-flash"
+#######################
