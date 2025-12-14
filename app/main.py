@@ -3,7 +3,7 @@
 import time
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI, Request, status
+from fastapi import FastAPI, Request, status, HTTPException
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
@@ -17,20 +17,19 @@ from app.core.logging import configure_logging, get_logger
 from app.api.v1.endpoints.health import update_metrics
 
 #Gemini integration
-from gemini_client import client, DEFAULT_MODEL
-# `google-genai` is optional. Import it after logging is configured so
-# we can handle missing dependency gracefully at runtime.
+from app.gemini_client import client, DEFAULT_MODEL
+from google.genai import types as genai_types
+from services.gemini_service import gemini_generate
+from services.prompt import (
+    prompt_job_analysis,
+    prompt_cv_analysis,
+    prompt_match,
+)
+
 
 # Configure logging
 configure_logging()
 logger = get_logger(__name__)
-
-# Optional GenAI import (google-genai). If it's not installed, disable
-# GenAI-related features without crashing application startup.
-try:
-    from google.genai import types as genai_types
-except Exception:
-    genai_types = None
 
 
 @asynccontextmanager
